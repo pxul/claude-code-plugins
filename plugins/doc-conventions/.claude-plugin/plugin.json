@@ -1,0 +1,8 @@
+{
+  "name": "doc-conventions",
+  "description": "House document conventions: ADR title/status format, working-note Lifespan lines, the specification/implementation-notes document set for a piece of work, and relocating a document between repositories.",
+  "author": {
+    "name": "Paul Jefferson",
+    "email": "31599723+pxul@users.noreply.github.com"
+  }
+}

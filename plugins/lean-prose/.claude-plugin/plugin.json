@@ -1,0 +1,8 @@
+{
+  "name": "lean-prose",
+  "description": "House prose style: lean, plainly worded text for documentation, commit messages, pull/merge request descriptions, issue bodies, and comments.",
+  "author": {
+    "name": "Paul Jefferson",
+    "email": "31599723+pxul@users.noreply.github.com"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "markup-style",
+  "description": "House markup conventions for prose: backtick code identifiers and repository/module/package names.",
+  "author": {
+    "name": "Paul Jefferson",
+    "email": "31599723+pxul@users.noreply.github.com"
+  }
+}

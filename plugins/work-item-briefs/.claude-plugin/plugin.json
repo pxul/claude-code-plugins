@@ -1,0 +1,8 @@
+{
+  "name": "work-item-briefs",
+  "description": "Higher-altitude work-item briefs (epic and business brief) describing a whole piece of work, above the per-diff stack-diff docs.",
+  "author": {
+    "name": "Paul Jefferson",
+    "email": "31599723+pxul@users.noreply.github.com"
+  }
+}

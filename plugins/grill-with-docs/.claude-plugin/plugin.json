@@ -1,0 +1,8 @@
+{
+  "name": "grill-with-docs",
+  "description": "A relentless interview to sharpen a plan or design, producing the specification, ADRs, glossary entries, and implementation notes as we go. Bundles the grilling and domain-modeling skills it drives, and to-issues for breaking a specification into end-to-end vertical-slice issues.",
+  "author": {
+    "name": "Paul Jefferson",
+    "email": "31599723+pxul@users.noreply.github.com"
+  }
+}

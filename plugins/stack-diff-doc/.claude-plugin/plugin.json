@@ -1,0 +1,8 @@
+{
+  "name": "stack-diff-doc",
+  "description": "Create stack-diff planning docs (issue-<slug>.md) for a stacked-diff workflow.",
+  "author": {
+    "name": "Paul Jefferson",
+    "email": "31599723+pxul@users.noreply.github.com"
+  }
+}
