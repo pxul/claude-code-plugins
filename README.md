@@ -6,14 +6,14 @@ A [Claude Code](https://code.claude.com) plugin marketplace holding my writing, 
 
 | Plugin | What it does |
 |---|---|
-| `lean-prose` | `/lean-prose:write-lean-prose` — the house prose style: lean, plainly worded text for documentation, commit messages, pull/merge request descriptions, issue bodies, and comments. |
-| `markup-style` | `/markup-style:markup-style` — the house markup conventions: backtick code identifiers and repository/module/package names (including possessives), cross-document links, and lists. |
 | `british-english` | `/british-english:british-english` — British English spelling everywhere, including code identifiers. |
 | `doc-conventions` | `/doc-conventions:doc-conventions` — ADR title and status format, working-note Lifespan lines, Mermaid diagram conventions, the specification/implementation-notes document set, and OpenAPI/AsyncAPI contract conventions. |
 | `go-style` | `/go-style:go-style` — the house Go style: interface placement (declare where consumed), error handling, doc and struct-field comments, testify and testdata conventions, and more. |
+| `grill-with-docs` | `/grill-with-docs:grill-with-docs` — a relentless interview to sharpen a plan or design, producing the specification, ADRs, glossary entries, and implementation notes as it goes. Bundles the `grilling` and `domain-modeling` skills it drives, and `to-issues` for breaking a specification into vertical-slice issues. Adapted from Matt Pocock's [mattpocock/skills](https://github.com/mattpocock/skills). |
+| `lean-prose` | `/lean-prose:write-lean-prose` — the house prose style: lean, plainly worded text for documentation, commit messages, pull/merge request descriptions, issue bodies, and comments. |
+| `markup-style` | `/markup-style:markup-style` — the house markup conventions: backtick code identifiers and repository/module/package names (including possessives), cross-document links, and lists. |
 | `stack-diff-doc` | `/stack-diff-doc:create-stack-diff-doc` — writes a planning doc (`issue-<slug>.md`) for one diff in a stacked-diff workflow: an issue title and body, a branch slug, and a git-spice-ready commit message. |
 | `work-item-briefs` | `/work-item-briefs:create-work-item-briefs` — writes the two higher-altitude descriptions of a whole piece of work: an epic brief (`epic-<slug>.md`, brief technical) and a business brief (`business-<slug>.md`, for a product tracker such as Jira). |
-| `grill-with-docs` | `/grill-with-docs:grill-with-docs` — a relentless interview to sharpen a plan or design, producing the specification, ADRs, glossary entries, and implementation notes as it goes. Bundles the `grilling` and `domain-modeling` skills it drives, and `to-issues` for breaking a specification into vertical-slice issues. Adapted from Matt Pocock's [mattpocock/skills](https://github.com/mattpocock/skills). |
 
 The skills refer to each other — `stack-diff-doc` writes in `lean-prose` style, for example — so they work best installed together.
 
