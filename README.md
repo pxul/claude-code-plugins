@@ -28,7 +28,7 @@ claude plugin marketplace add pxul/claude-code-plugins
 Install the whole set:
 
 ```
-claude plugin install all@pxul
+claude plugin install all@pxul-plugins
 ```
 
 `all` adds no skills of its own. It lists every other plugin as a dependency, so installing it installs them all.
@@ -36,16 +36,16 @@ claude plugin install all@pxul
 Or install a single plugin:
 
 ```
-claude plugin install lean-prose@pxul
+claude plugin install lean-prose@pxul-plugins
 ```
 
-Inside a Claude Code session, `/plugin install all@pxul` opens the plugin's details, where you choose a scope before it installs. `/plugin` → **Discover** lists every plugin in the marketplace to pick from.
+Inside a Claude Code session, `/plugin install all@pxul-plugins` opens the plugin's details, where you choose a scope before it installs. `/plugin` → **Discover** lists every plugin in the marketplace to pick from.
 
 Skills are namespaced by their plugin (`/lean-prose:write-lean-prose`), and most also trigger automatically when a task matches their description. `grill-with-docs` and `to-issues` run only when invoked by name.
 
 ## Updating
 
-In a Claude Code session, go to `/plugin` → **Marketplaces** → `pxul` and choose **Update marketplace**. This refreshes the listing and updates the plugins installed from it, including any new dependencies of `all`.
+In a Claude Code session, go to `/plugin` → **Marketplaces** → `pxul-plugins` and choose **Update marketplace**. This refreshes the listing and updates the plugins installed from it, including any new dependencies of `all`.
 
 Or choose **Enable auto-update** on the same screen. Plugins are versioned by git commit, so every push to `main` is an update.
 
@@ -57,15 +57,15 @@ Load every plugin from a checkout for one session, without installing anything:
 claude --plugin-dir ./plugins
 ```
 
-Or install from the checkout as a marketplace. It registers under the same name, `pxul`, so remove any existing `pxul` marketplace first:
+Or install from the checkout as a marketplace. It registers under the same name, `pxul-plugins`, so remove any existing `pxul-plugins` marketplace first:
 
 ```
 claude plugin validate .
 claude plugin marketplace add ./
-claude plugin install all@pxul
+claude plugin install all@pxul-plugins
 ```
 
-A marketplace added from a local folder reads the plugin files from that folder. Edits take effect at the next session start, or after `/reload-plugins` in an open session. To switch back to GitHub, run `claude plugin marketplace remove pxul`, which also uninstalls its plugins, then follow [Getting started](#getting-started).
+A marketplace added from a local folder reads the plugin files from that folder. Edits take effect at the next session start, or after `/reload-plugins` in an open session. To switch back to GitHub, run `claude plugin marketplace remove pxul-plugins`, which also uninstalls its plugins, then follow [Getting started](#getting-started).
 
 ## Repository layout
 
