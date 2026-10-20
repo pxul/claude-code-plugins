@@ -1,0 +1,8 @@
+{
+  "name": "core-rules",
+  "description": "Working rules added to every prompt: TDD one test at a time, one plan step at a time, stop and ask about changes the plan does not cover, and change nothing after a \"question:\" prefix.",
+  "author": {
+    "name": "Paul Jefferson",
+    "email": "31599723+pxul@users.noreply.github.com"
+  }
+}

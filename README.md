@@ -7,6 +7,8 @@ A [Claude Code](https://code.claude.com) plugin marketplace holding my writing, 
 | Plugin | What it does |
 |---|---|
 | `british-english` | `/british-english:british-english` — British English spelling everywhere, including code identifiers. |
+| `code-review` | `/code-review:review` — the house code review: a summary and findings grouped by severity (Critical, Major, Minor, Nitpick), written to `<branch>-review-<NN>-<short-hash>.md` in the project root, with a focus on correctness, safety, tests, types and dead code. |
+| `core-rules` | Working rules added to every prompt by a hook rather than a skill, since they must always apply: TDD one test at a time, one plan step at a time, stop and ask about changes the plan does not cover, and change nothing after a `question:` prefix. |
 | `doc-conventions` | `/doc-conventions:doc-conventions` — ADR title and status format, working-note Lifespan lines, Mermaid diagram conventions, the specification/implementation-notes document set, and OpenAPI/AsyncAPI contract conventions. |
 | `go-style` | `/go-style:go-style` — the house Go style: interface placement (declare where consumed), error handling, doc and struct-field comments, testify and testdata conventions, and more. |
 | `grill-with-docs` | `/grill-with-docs:grill-with-docs` — a relentless interview to sharpen a plan or design, producing the specification, ADRs, glossary entries, and implementation notes as it goes. Bundles the `grilling` and `domain-modeling` skills it drives, and `to-issues` for breaking a specification into vertical-slice issues. Adapted from Matt Pocock's [mattpocock/skills](https://github.com/mattpocock/skills). |

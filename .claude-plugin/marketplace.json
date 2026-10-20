@@ -16,6 +16,16 @@
       "description": "House spelling convention: British English everywhere, including code identifiers."
     },
     {
+      "name": "code-review",
+      "source": "./plugins/code-review",
+      "description": "House code review: findings written to a numbered review file in the project root, grouped by severity (Critical, Major, Minor, Nitpick), with a focus on correctness, safety, tests, types and dead code."
+    },
+    {
+      "name": "core-rules",
+      "source": "./plugins/core-rules",
+      "description": "Working rules added to every prompt: TDD one test at a time, one plan step at a time, stop and ask about changes the plan does not cover, and change nothing after a \"question:\" prefix."
+    },
+    {
       "name": "doc-conventions",
       "source": "./plugins/doc-conventions",
       "description": "House document conventions: ADR title/status format, working-note Lifespan lines, the specification/implementation-notes document set for a piece of work, and relocating a document between repositories."

@@ -1,0 +1,8 @@
+{
+  "name": "code-review",
+  "description": "House code review: findings written to a numbered review file in the project root, grouped by severity (Critical, Major, Minor, Nitpick), with a focus on correctness, safety, tests, types and dead code.",
+  "author": {
+    "name": "Paul Jefferson",
+    "email": "31599723+pxul@users.noreply.github.com"
+  }
+}
