@@ -15,46 +15,57 @@ A [Claude Code](https://code.claude.com) plugin marketplace holding my writing, 
 | `stack-diff-doc` | `/stack-diff-doc:create-stack-diff-doc` — writes a planning doc (`issue-<slug>.md`) for one diff in a stacked-diff workflow: an issue title and body, a branch slug, and a git-spice-ready commit message. |
 | `work-item-briefs` | `/work-item-briefs:create-work-item-briefs` — writes the two higher-altitude descriptions of a whole piece of work: an epic brief (`epic-<slug>.md`, brief technical) and a business brief (`business-<slug>.md`, for a product tracker such as Jira). |
 
-The skills refer to each other — `stack-diff-doc` writes in `lean-prose` style, for example — so they work best installed together.
+The skills refer to each other — `stack-diff-doc` writes in `lean-prose` style, for example — so they work best installed together. The `all` plugin installs the whole set in one go.
 
 ## Getting started
 
-Add the marketplace once per machine, in a Claude Code session:
+Run these from your shell. Add the marketplace once per machine:
 
 ```
-/plugin marketplace add pxul/claude-code-plugins
+claude plugin marketplace add pxul/claude-code-plugins
 ```
 
-Install a plugin:
+Install the whole set:
 
 ```
-/plugin install lean-prose@pxul
+claude plugin install all@pxul
 ```
 
-Or install the whole set:
+`all` adds no skills of its own. It lists every other plugin as a dependency, so installing it installs them all.
+
+Or install a single plugin:
 
 ```
-/plugin install lean-prose@pxul
-/plugin install markup-style@pxul
-/plugin install british-english@pxul
-/plugin install doc-conventions@pxul
-/plugin install go-style@pxul
-/plugin install stack-diff-doc@pxul
-/plugin install work-item-briefs@pxul
-/plugin install grill-with-docs@pxul
+claude plugin install lean-prose@pxul
 ```
 
-`/plugin` → **Discover** also lists every plugin in the marketplace to pick from.
+Inside a Claude Code session, `/plugin install all@pxul` opens the plugin's details, where you choose a scope before it installs. `/plugin` → **Discover** lists every plugin in the marketplace to pick from.
 
 Skills are namespaced by their plugin (`/lean-prose:write-lean-prose`), and most also trigger automatically when a task matches their description. `grill-with-docs` and `to-issues` run only when invoked by name.
 
 ## Updating
 
+In a Claude Code session, go to `/plugin` → **Marketplaces** → `pxul` and choose **Update marketplace**. This refreshes the listing and updates the plugins installed from it, including any new dependencies of `all`.
+
+Or choose **Enable auto-update** on the same screen. Plugins are versioned by git commit, so every push to `main` is an update.
+
+## Testing locally
+
+Load every plugin from a checkout for one session, without installing anything:
+
 ```
-/plugin marketplace update pxul
+claude --plugin-dir ./plugins
 ```
 
-Or enable auto-update via `/plugin` → **Marketplaces** → `pxul` → **Enable auto-update**. Plugins are versioned by git commit, so every push to `main` is an update.
+Or install from the checkout as a marketplace. It registers under the same name, `pxul`, so remove any existing `pxul` marketplace first:
+
+```
+claude plugin validate .
+claude plugin marketplace add ./
+claude plugin install all@pxul
+```
+
+A marketplace added from a local folder reads the plugin files from that folder. Edits take effect at the next session start, or after `/reload-plugins` in an open session. To switch back to GitHub, run `claude plugin marketplace remove pxul`, which also uninstalls its plugins, then follow [Getting started](#getting-started).
 
 ## Repository layout
 
@@ -71,7 +82,7 @@ claude-code-plugins/
                 └── SKILL.md      # the skill
 ```
 
-A new plugin needs its directory under `plugins/` and an entry in `marketplace.json` with a relative `source` (`./plugins/<plugin-name>`). A new skill in an existing plugin needs only its `skills/<skill-name>/SKILL.md`.
+A new plugin needs its directory under `plugins/`, an entry in `marketplace.json` with a relative `source` (`./plugins/<plugin-name>`), and its name added to the `dependencies` of `plugins/all/.claude-plugin/plugin.json`. A new skill in an existing plugin needs only its `skills/<skill-name>/SKILL.md`.
 
 ## Licence
 

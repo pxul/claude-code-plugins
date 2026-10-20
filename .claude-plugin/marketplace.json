@@ -6,6 +6,11 @@
   },
   "plugins": [
     {
+      "name": "all",
+      "source": "./plugins/all",
+      "description": "Installs every plugin in this marketplace. Adds no skills of its own."
+    },
+    {
       "name": "british-english",
       "source": "./plugins/british-english",
       "description": "House spelling convention: British English everywhere, including code identifiers."

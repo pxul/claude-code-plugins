@@ -1,0 +1,18 @@
+{
+  "name": "all",
+  "description": "Installs every plugin in this marketplace. Adds no skills of its own.",
+  "author": {
+    "name": "Paul Jefferson",
+    "email": "31599723+pxul@users.noreply.github.com"
+  },
+  "dependencies": [
+    "british-english",
+    "doc-conventions",
+    "go-style",
+    "grill-with-docs",
+    "lean-prose",
+    "markup-style",
+    "stack-diff-doc",
+    "work-item-briefs"
+  ]
+}
