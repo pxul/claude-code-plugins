@@ -1,6 +1,6 @@
 ---
 name: go-style
-description: House Go style rules. Apply when writing or editing Go code — covers interface placement (declare where consumed), error handling (sentinels and wrapping), doc comments, struct field comments, testing conventions (testify, testdata fixtures), benchmarking, and line splitting. Use on any Go authoring or review task.
+description: House Go style rules. Apply when writing or editing Go code — covers interface placement (declare where consumed), error handling (sentinels and wrapping), doc comments, struct field comments, testing conventions (public interface, testify, testdata fixtures), logging with slog, acronyms in names, benchmarking, and line splitting. Use on any Go authoring or review task.
 ---
 
 # Go style
@@ -43,3 +43,9 @@ type Command struct {
 9. **Unused method receiver is a smell — prefer a free function:** If a method never touches its receiver, convert it to a free function rather than documenting the inconsistency. The unused receiver advertises a dependency or seam the code doesn't actually use (e.g. `func (a App) loadConfig(...)` reading via `os.Open` while `App.FS` goes untouched); dropping it removes what reads as inconsistent, whereas a doc comment only annotates the symptom. Companion rule: keep struct field doc comments honest about what the field is actually used for — don't let them advertise a path (e.g. a read) the field doesn't own.
 
 10. **Declare interfaces where they are consumed:** An interface belongs in the package that calls it, named and sized for what that consumer needs; the implementing package exports concrete types (`func NewCrypto() *Crypto`), never an interface for itself. Do not declare an interface next to its implementation for mocking or "future flexibility" — an interface earns its place when a consumer must accept more than one implementation. A shared library may declare one interface on behalf of its many consumers, but the implementor never owns it. Keep interfaces small: only the methods the consumer actually calls.
+
+11. **Test the public interface:** Write tests against the package's public API, not internal or backend implementation details.
+
+12. **Log with `slog`:** Use the standard library's `log/slog` for structured logging where it helps observability (important decisions, errors, state changes). Do not log trivial paths.
+
+13. **Capitalise acronyms and initialisms in names:** Keep them in full caps in variable, type and field names: `UserID` not `UserId`, `yAPD` not `yApd`.
