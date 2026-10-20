@@ -41,6 +41,11 @@
       "description": "House markup conventions for prose: backtick code identifiers and repository/module/package names."
     },
     {
+      "name": "project-planning",
+      "source": "./plugins/project-planning",
+      "description": "Planning conventions for a project: next-steps.md, a morning review prompted at session start, project briefs, and plans that state the current position with history left to git."
+    },
+    {
       "name": "stack-diff-doc",
       "source": "./plugins/stack-diff-doc",
       "description": "Create stack-diff planning docs (issue-<slug>.md) for a stacked-diff workflow: issue title/body, branch slug, and a git-spice-ready commit message."

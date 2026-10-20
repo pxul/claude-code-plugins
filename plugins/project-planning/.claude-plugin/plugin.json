@@ -1,0 +1,8 @@
+{
+  "name": "project-planning",
+  "description": "Planning conventions for a project: next-steps.md, a morning review prompted at session start, project briefs, and plans that state the current position with history left to git.",
+  "author": {
+    "name": "Paul Jefferson",
+    "email": "31599723+pxul@users.noreply.github.com"
+  }
+}
