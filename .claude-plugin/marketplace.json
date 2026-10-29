@@ -61,6 +61,11 @@
       "description": "Create stack-diff planning docs (issue-<slug>.md) for a stacked-diff workflow: issue title/body, branch slug, and a git-spice-ready commit message."
     },
     {
+      "name": "things3",
+      "source": "./plugins/things3",
+      "description": "Read and change Things3 through AppleScript: the Inbox, Today, Upcoming, Anytime, Someday and Logbook lists, areas, projects, to-dos, when dates, deadlines and tags."
+    },
+    {
       "name": "work-item-briefs",
       "source": "./plugins/work-item-briefs",
       "description": "Write the two higher-altitude descriptions of a whole piece of work — an epic brief (brief technical) and a business brief (business level) — as markdown files, above the per-diff stack-diff docs."
