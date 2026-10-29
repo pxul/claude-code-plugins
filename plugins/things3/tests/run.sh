@@ -52,13 +52,31 @@ EOF
 )
 [ -n "$project" ] || exit 2
 
-# The project is deleted by id, so nothing else can be hit.
+# The project is deleted by id, so nothing else can be hit. Its logged to-dos
+# are no longer among its to-dos, so they are deleted from the Logbook first.
 cleanup() {
-	osascript - "$project" <<'EOF'
+	left=$(osascript - "$project" <<'EOF'
 on run argv
-	tell application "Things3" to delete project id (item 1 of argv)
+	tell application "Things3"
+		set logbook to list id "TMLogbookListSource"
+		set loggedIds to {}
+		repeat with todo in to dos of logbook
+			if project of todo is not missing value then
+				if id of project of todo is (item 1 of argv) then set end of loggedIds to id of todo
+			end if
+		end repeat
+		repeat with loggedId in loggedIds
+			delete (to do id loggedId of logbook)
+		end repeat
+		delete project id (item 1 of argv)
+		return count of (to dos of logbook whose name starts with "zz test")
+	end tell
 end run
 EOF
+)
+	if [ "$left" != "0" ]; then
+		echo "WARNING: $left to-dos named \"zz test...\" are still in the Logbook" >&2
+	fi
 }
 trap cleanup EXIT
 
@@ -145,6 +163,82 @@ check "set-when rejects an unknown word" 1 $?
 run set-deadline "$todo" someday
 check "set-deadline rejects anything but a date or none" 1 $?
 check "a rejected change leaves the to-do as it was" "$todo${tab}zz test dates${tab}${tab}$rest" "$(listed_line anytime "$todo")"
+
+# Completed and canceled to-dos go to the Logbook; open brings one back.
+todo=$(run add-todo "zz test status" "" project "$project")
+run set-status "$todo" completed
+check "set-status completed" "status: completed" "$(run show-todo "$todo" | grep '^status: ')"
+# A completed to-do stays in Anytime for a moment.
+sleep 2
+check "a completed to-do is out of Anytime" "" "$(listed_line anytime "$todo")"
+run set-status "$todo" open
+check "set-status open" "status: open" "$(run show-todo "$todo" | grep '^status: ')"
+check "a reopened to-do is back in Anytime" 1 "$(listed_line anytime "$todo" | grep -c .)"
+run set-status "$todo" canceled
+check "set-status canceled" "status: canceled" "$(run show-todo "$todo" | grep '^status: ')"
+run set-status "$todo" done
+check "set-status rejects an unknown status" 1 $?
+
+# waiting_to_log prints the completed and canceled items outside the test
+# project that Things3 has not yet moved to the Logbook.
+waiting_to_log() {
+	osascript - "$project" <<'EOF'
+on run argv
+	tell application "Things3"
+		set out to {}
+		repeat with todo in (to dos whose status is not open)
+			set inTest to false
+			if project of todo is not missing value then set inTest to (id of project of todo is (item 1 of argv))
+			if not inTest then set end of out to id of todo & " " & name of todo
+		end repeat
+		repeat with theProject in (projects whose status is not open)
+			set end of out to id of theProject & " " & name of theProject
+		end repeat
+		set AppleScript's text item delimiters to linefeed
+		return out as text
+	end tell
+end run
+EOF
+}
+
+# Logging moves every completed item in Things3 to the Logbook, so it is done
+# only when the test's are the only ones waiting.
+logged=$(run add-todo "zz test logged" "" project "$project")
+run set-status "$logged" completed
+waiting=$(waiting_to_log)
+if [ -n "$waiting" ]; then
+	echo "skip Logbook cases: other completed items are waiting to be logged:"
+	echo "$waiting" | sed 's/^/     /'
+else
+	# Things3 will not log a to-do completed a moment ago.
+	sleep 2
+	osascript -e 'tell application "Things3" to log completed now'
+	check "a completed to-do is in the Logbook once logged" 1 "$(run list-todos logbook 20 | grep -c "^$logged$tab")"
+	check "a canceled to-do is in the Logbook once logged" 1 "$(run list-todos logbook 20 | grep -c "^$todo$tab")"
+	check "show-todo finds a logged to-do" "status: completed" "$(run show-todo "$logged" | grep '^status: ')"
+	run set-status "$logged" open
+	check "set-status open reopens a logged to-do" "status: open" "$(run show-todo "$logged" | grep '^status: ')"
+	check "a reopened logged to-do is back in Anytime" 1 "$(listed_line anytime "$logged" | grep -c .)"
+	run delete-todo "$todo"
+	check "delete-todo deletes a logged to-do" false "$(run list-todos logbook 20 | grep -q "^$todo$tab" && echo true || echo false)"
+fi
+
+# in_trash prints true if the item with the given id is in the Trash.
+in_trash() {
+	osascript - "$1" <<'EOF'
+on run argv
+	tell application "Things3" to return (id of to dos of list id "TMTrashListSource") contains (item 1 of argv)
+end run
+EOF
+}
+
+# Deleting moves a to-do to the Trash, and delete-todo will not delete a project.
+todo=$(run add-todo "zz test delete" "" project "$project")
+run delete-todo "$todo"
+check "delete-todo puts the to-do in the Trash" true "$(in_trash "$todo")"
+run delete-todo "$project"
+check "delete-todo refuses a project" 1 $?
+check "the refused project is not in the Trash" false "$(in_trash "$project")"
 
 # Nothing the cases made may be outside the test project.
 escaped=$(osascript - "$project" <<'EOF'
