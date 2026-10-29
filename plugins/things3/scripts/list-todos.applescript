@@ -12,14 +12,15 @@ on run argv
 	set listId to listIdFor(item 1 of argv)
 	set out to {}
 	tell application "Things3"
-		set source to list id listId
-		set total to count of to dos of source
+		-- Read once, so that the list changing underneath does not shift the
+		-- entries still to be printed.
+		set entries to to dos of list id listId
 		if argCount is 2 then
 			set wanted to (item 2 of argv) as integer
-			if wanted < total then set total to wanted
+			if wanted < 1 then error "list-todos.applescript: <max> must be 1 or more"
+			if wanted < (count of entries) then set entries to items 1 thru wanted of entries
 		end if
-		repeat with i from 1 to total
-			set todo to to do i of source
+		repeat with todo in entries
 			if class of todo is not project then set end of out to my todoLine(todo)
 		end repeat
 	end tell
