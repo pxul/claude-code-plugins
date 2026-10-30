@@ -6,20 +6,18 @@ A [Claude Code](https://code.claude.com) plugin marketplace holding my writing, 
 
 | Plugin | What it does |
 |---|---|
-| `british-english` | `/british-english:british-english` — British English spelling everywhere, including code identifiers. |
 | `code-review` | `/code-review:review` — the house code review: a summary and findings grouped by severity (Critical, Major, Minor, Nitpick), written to `<branch>-review-<NN>-<short-hash>.md` in the project root, with a focus on correctness, safety, tests, types and dead code. |
 | `core-rules` | Working rules added to every prompt by a hook rather than a skill, since they must always apply: TDD one test at a time, one plan step at a time, stop and ask about changes the plan does not cover, and change nothing after a `question:` prefix. |
 | `doc-conventions` | `/doc-conventions:doc-conventions` — ADR title and status format, working-note Lifespan lines, Mermaid diagram conventions, the specification/implementation-notes document set, and OpenAPI/AsyncAPI contract conventions. |
 | `go-style` | `/go-style:go-style` — the house Go style: interface placement (declare where consumed), error handling, doc and struct-field comments, testify and testdata conventions, and more. |
 | `grill-with-docs` | `/grill-with-docs:grill-with-docs` — a relentless interview to sharpen a plan or design, producing the specification, ADRs, glossary entries, and implementation notes as it goes. Bundles the `grilling` and `domain-modeling` skills it drives, and `to-issues` for breaking a specification into vertical-slice issues. Adapted from Matt Pocock's [mattpocock/skills](https://github.com/mattpocock/skills). |
-| `lean-prose` | `/lean-prose:write-lean-prose` — the house prose style: lean, plainly worded text for documentation, commit messages, pull/merge request descriptions, issue bodies, and comments. |
-| `markup-style` | `/markup-style:markup-style` — the house markup conventions: backtick code identifiers and repository/module/package names (including possessives), cross-document links, and lists. |
+| `house-rules` | Style rules added to every session by a hook rather than a skill, since they must always apply: British English, lean and plain prose, markup conventions (backticked identifiers, cross-document links, lists), and formatting (24-hour times, no em dashes, no hard-wrapping). |
 | `project-planning` | `/project-planning:project-planning` — the house planning conventions: `backlog.md` (Claude's work, most important first), `history.md` (each session's decisions), the user's actions in their to-do app, a hub project that plans across projects, project briefs, and plans that state the current position. Your own instructions name the to-do app and its skill (such as `things3`) and the hub project. `/project-planning:join-hub` brings a project into the hub. A session-start hook asks for any uncommitted `backlog.md` change, such as items the hub added, to be committed first; it does nothing in a project without one. |
 | `stack-diff-doc` | `/stack-diff-doc:create-stack-diff-doc` — writes a planning doc (`issue-<slug>.md`) for one diff in a stacked-diff workflow: an issue title and body, a branch slug, and a git-spice-ready commit message. |
 | `things3` | `/things3:things3` — reads and changes Things3 through AppleScript: the Inbox, Today, Upcoming, Anytime, Someday and Logbook lists, areas, projects, to-dos, when dates, deadlines and tags. Needs macOS with Things3 installed; macOS asks once for permission for the terminal to control Things3. |
 | `work-item-briefs` | `/work-item-briefs:create-work-item-briefs` — writes the two higher-altitude descriptions of a whole piece of work: an epic brief (`epic-<slug>.md`, brief technical) and a business brief (`business-<slug>.md`, for a product tracker such as Jira). |
 
-The skills refer to each other — `stack-diff-doc` writes in `lean-prose` style, for example — so they work best installed together. The `all` plugin installs the whole set in one go.
+The skills refer to each other (`stack-diff-doc` writes in the `house-rules` prose style, for example), so they work best installed together. The `all` plugin installs the whole set in one go.
 
 ## Getting started
 
@@ -40,12 +38,12 @@ claude plugin install all@pxul-plugins
 Or install a single plugin:
 
 ```
-claude plugin install lean-prose@pxul-plugins
+claude plugin install go-style@pxul-plugins
 ```
 
 Inside a Claude Code session, `/plugin install all@pxul-plugins` opens the plugin's details, where you choose a scope before it installs. `/plugin` → **Discover** lists every plugin in the marketplace to pick from.
 
-Skills are namespaced by their plugin (`/lean-prose:write-lean-prose`), and most also trigger automatically when a task matches their description. `grill-with-docs`, `to-issues` and `join-hub` run only when invoked by name.
+Skills are namespaced by their plugin (`/go-style:go-style`), and most also trigger automatically when a task matches their description. `grill-with-docs`, `to-issues` and `join-hub` run only when invoked by name.
 
 ## Updating
 

@@ -6,14 +6,12 @@
     "email": "31599723+pxul@users.noreply.github.com"
   },
   "dependencies": [
-    "british-english",
     "code-review",
     "core-rules",
     "doc-conventions",
     "go-style",
     "grill-with-docs",
-    "lean-prose",
-    "markup-style",
+    "house-rules",
     "project-planning",
     "stack-diff-doc",
     "things3",

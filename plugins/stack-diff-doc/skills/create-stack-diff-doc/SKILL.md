@@ -13,7 +13,7 @@ This skill writes a single planning document for **one diff in a stacked-diff wo
 
 The skill **writes the doc and stops.** It never creates branches, issues, or commits, and never runs git — it proposes; the developer executes.
 
-Write **lean and clinical**, in the house prose style defined by the `lean-prose` plugin (`/lean-prose:write-lean-prose`) — that skill is the canonical reference for lean, plainly worded prose across this plugin set. State what the diff does in plain, factual sentences; do not pad. "Keeping it lean" below applies the style to this doc's sections.
+Write **lean and clinical**, in the house prose style: the lean and plain prose rules of the `house-rules` plugin, which loads them into every session. State what the diff does in plain, factual sentences; do not pad. "Keeping it lean" below applies the style to this doc's sections.
 
 ## When to use
 
@@ -94,7 +94,7 @@ Closes #<NN>
 
 ### Keeping it lean
 
-The doc should be as short as the change allows — a reviewer skims it, so every line must carry weight. General prose style is `lean-prose`'s job; these rules are what it means for this doc's sections.
+The doc should be as short as the change allows — a reviewer skims it, so every line must carry weight. General prose style is the job of the house rules (`house-rules`); these rules are what it means for this doc's sections.
 
 - **Omit inapplicable sections.** Drop Background when the lead already says why; drop Tests for docs-only or pure-refactor diffs once the lead notes "no behavioural change". Do not keep a heading just to fill the template.
 - **No restating across sections.** If the lead or Scope already covers a point, do not repeat it in the commit body or another section.
