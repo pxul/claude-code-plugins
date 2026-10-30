@@ -1,6 +1,6 @@
 #!/bin/sh
-# Runs the things3 scripts against the real Things3, inside a throwaway area
-# and projects that are deleted at the end, whether or not the cases pass.
+# Runs the things3 scripts against the real Things3, inside a throwaway area,
+# projects and tags that are deleted at the end, whether or not the cases pass.
 # Touches nothing outside them. Every to-do a case makes has a name starting
 # "zz test", so the last case can find any that ended up outside them.
 
@@ -11,6 +11,8 @@ scripts="$here/../scripts"
 project_name="zz Things skill test"
 project_notes=$(printf 'Folder: ~/zz-test\nSecond line')
 area_name="zz Things skill test area"
+tag_name="zz test tag"
+tag2_name="zz test tag 2"
 tab=$(printf '\t')
 failed=0
 
@@ -36,12 +38,12 @@ run() {
 
 existing=$(osascript - "$project_name" "$area_name" <<'EOF'
 on run argv
-	tell application "Things3" to return (count of (projects whose name starts with (item 1 of argv))) + (count of (areas whose name is (item 2 of argv)))
+	tell application "Things3" to return (count of (projects whose name starts with (item 1 of argv))) + (count of (areas whose name is (item 2 of argv))) + (count of (tags whose name starts with "zz test"))
 end run
 EOF
 )
 if [ "$existing" != "0" ]; then
-	echo "A project named \"$project_name...\" or an area named \"$area_name\" already exists; delete it and run again." >&2
+	echo "A project named \"$project_name...\", an area named \"$area_name\" or a tag named \"zz test...\" already exists; delete it and run again." >&2
 	exit 2
 fi
 
@@ -52,6 +54,15 @@ end run
 EOF
 )
 [ -n "$area" ] || exit 2
+
+osascript - "$tag_name" "$tag2_name" <<'EOF' >/dev/null
+on run argv
+	tell application "Things3"
+		make new tag with properties {name:item 1 of argv}
+		make new tag with properties {name:item 2 of argv}
+	end tell
+end run
+EOF
 
 project=$(osascript - "$project_name" "$project_notes" <<'EOF'
 on run argv
@@ -117,6 +128,15 @@ EOF
 	if [ "$left" != "0" ]; then
 		echo "WARNING: $left to-dos named \"zz test...\" are still in Things3" >&2
 	fi
+	# No tag named "zz test..." existed before the run, so every one is the test's.
+	osascript <<'EOF'
+tell application "Things3"
+	set doomed to id of (tags whose name starts with "zz test")
+	repeat with tagId in doomed
+		delete tag id tagId
+	end repeat
+end tell
+EOF
 }
 trap cleanup EXIT
 [ -n "$project" ] || exit 2
@@ -316,6 +336,55 @@ check "move-todo rejects an unknown target" 1 $?
 run move-todo "$todo" project "$area"
 check "move-todo rejects an area's id as a project's" 1 $?
 check "a rejected move leaves the to-do where it was" "project: $project_name" "$(run show-todo "$todo" | grep '^project: ')"
+
+# Tags are added to and removed from a to-do by name; an unknown tag is
+# refused rather than made.
+tags=$(run list-tags)
+check "list-tags runs" 0 $?
+check "list-tags prints two fields a line" "" "$(echo "$tags" | awk -F'\t' 'NF && NF != 2')"
+check "list-tags has the test tag" 1 "$(echo "$tags" | awk -F'\t' -v name="$tag_name" '$2 == name' | grep -c .)"
+todo=$(run add-todo "zz test tags" "" project "$project")
+run add-tag "$todo" "$tag_name"
+check "add-tag" "tags: $tag_name" "$(run show-todo "$todo" | grep '^tags: ')"
+run add-tag "$todo" "$tag_name"
+check "add-tag twice adds the tag once" "tags: $tag_name" "$(run show-todo "$todo" | grep '^tags: ')"
+# Things3 puts a to-do's tags in its own order, so they are sorted to compare.
+sorted_tags() {
+	echo "$1" | tr ',' '\n' | sed 's/^ *//' | sort | paste -sd ',' - | sed 's/,/, /g'
+}
+run add-tag "$todo" "$tag2_name"
+check "add-tag a second tag" "$tag_name, $tag2_name" "$(sorted_tags "$(run show-todo "$todo" | sed -n 's/^tags: //p')")"
+check "list-todos shows the tags" "$tag_name, $tag2_name" "$(sorted_tags "$(listed_line anytime "$todo" | cut -f7)")"
+run remove-tag "$todo" "$tag_name"
+check "remove-tag" "tags: $tag2_name" "$(run show-todo "$todo" | grep '^tags: ')"
+run remove-tag "$todo" "$tag_name"
+check "remove-tag of a tag the to-do lacks changes nothing" "tags: $tag2_name" "$(run show-todo "$todo" | grep '^tags: ')"
+run add-tag "$todo" "zz test no such tag"
+check "add-tag refuses an unknown tag" 1 $?
+check "a refused tag is not made" 0 "$(run list-tags | awk -F'\t' '$2 == "zz test no such tag"' | grep -c .)"
+
+# Tags themselves are created by name and deleted by id. A name already taken
+# is refused, and so is one with a comma, which would read as two tags in a
+# to-do's tags.
+tag3_name="zz test tag 3"
+tag3=$(run create-tag "$tag3_name")
+check "create-tag" "$tag3${tab}$tag3_name" "$(run list-tags | grep "^$tag3$tab")"
+run create-tag "$tag3_name"
+check "create-tag refuses a name already taken" 1 $?
+check "a refused name is not made twice" 1 "$(run list-tags | awk -F'\t' -v name="$tag3_name" '$2 == name' | grep -c .)"
+run create-tag "zz test a, b"
+check "create-tag refuses a name with a comma" 1 $?
+run delete-tag "$tag3"
+check "delete-tag" 0 "$(run list-tags | awk -F'\t' -v name="$tag3_name" '$2 == name' | grep -c .)"
+run delete-tag "$tag3"
+check "delete-tag refuses an unknown id" 1 $?
+
+# show-todo also shows the when date and deadline.
+run set-when "$todo" today
+run set-deadline "$todo" "$fortnight"
+shown=$(run show-todo "$todo")
+check "show-todo when" "when: $today" "$(echo "$shown" | grep '^when: ')"
+check "show-todo deadline" "deadline: $fortnight" "$(echo "$shown" | grep '^deadline: ')"
 
 # Nothing the cases made may be outside the test area and projects.
 escaped=$(osascript - "$area" $test_projects <<EOF
