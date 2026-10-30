@@ -1,6 +1,6 @@
 {
   "name": "project-planning",
-  "description": "Planning conventions for a project: next-steps.md, a morning review prompted at session start, project briefs, and plans that state the current position with history left to git.",
+  "description": "Planning conventions for a project: backlog.md for Claude's work, history.md for each session's decisions, the user's actions in their to-do app, and a hub project that plans across projects. A session-start hook asks for backlog.md changes left by the hub to be committed, and join-hub brings a project into the hub.",
   "author": {
     "name": "Paul Jefferson",
     "email": "31599723+pxul@users.noreply.github.com"
