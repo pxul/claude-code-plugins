@@ -1,8 +1,8 @@
 #!/bin/sh
-# Runs the things3 scripts against the real Things3, inside a throwaway project
-# that is deleted at the end, whether or not the cases pass. Touches nothing
-# outside that project. Every to-do a case makes has a name starting
-# "zz test", so the last case can find any that ended up outside it.
+# Runs the things3 scripts against the real Things3, inside a throwaway area
+# and projects that are deleted at the end, whether or not the cases pass.
+# Touches nothing outside them. Every to-do a case makes has a name starting
+# "zz test", so the last case can find any that ended up outside them.
 
 set -u
 
@@ -10,6 +10,7 @@ here=$(cd "$(dirname "$0")" && pwd)
 scripts="$here/../scripts"
 project_name="zz Things skill test"
 project_notes=$(printf 'Folder: ~/zz-test\nSecond line')
+area_name="zz Things skill test area"
 tab=$(printf '\t')
 failed=0
 
@@ -33,16 +34,24 @@ run() {
 	osascript "$scripts/$script.applescript" "$@"
 }
 
-existing=$(osascript - "$project_name" <<'EOF'
+existing=$(osascript - "$project_name" "$area_name" <<'EOF'
 on run argv
-	tell application "Things3" to return count of (projects whose name is (item 1 of argv))
+	tell application "Things3" to return (count of (projects whose name starts with (item 1 of argv))) + (count of (areas whose name is (item 2 of argv)))
 end run
 EOF
 )
 if [ "$existing" != "0" ]; then
-	echo "A project named \"$project_name\" already exists; delete it and run again." >&2
+	echo "A project named \"$project_name...\" or an area named \"$area_name\" already exists; delete it and run again." >&2
 	exit 2
 fi
+
+area=$(osascript - "$area_name" <<'EOF'
+on run argv
+	tell application "Things3" to return id of (make new area with properties {name:item 1 of argv})
+end run
+EOF
+)
+[ -n "$area" ] || exit 2
 
 project=$(osascript - "$project_name" "$project_notes" <<'EOF'
 on run argv
@@ -50,35 +59,74 @@ on run argv
 end run
 EOF
 )
-[ -n "$project" ] || exit 2
+# The ids of every project the cases make, for the cleanup and the last case.
+test_projects=$project
 
-# The project is deleted by id, so nothing else can be hit. Its logged to-dos
-# are no longer among its to-dos, so they are deleted from the Logbook first.
+# is_test is an AppleScript handler, shared by the cleanup and the last case:
+# isTest(todo, areaId, projectIds) is true for a to-do in the test area or a
+# test project.
+is_test='
+on isTest(todo, areaId, projectIds)
+	tell application "Things3"
+		if project of todo is not missing value then return projectIds contains (id of project of todo)
+		if area of todo is not missing value then return (id of area of todo) is areaId
+		return false
+	end tell
+end isTest'
+
+# Everything is deleted by id, so nothing else can be hit. Logged to-dos are
+# no longer among their project's or area's, so they are found in the Logbook.
+# Ids are collected before anything is deleted, as deleting shifts the lists.
 cleanup() {
-	left=$(osascript - "$project" <<'EOF'
+	left=$(osascript - "$area" $test_projects <<EOF
 on run argv
+	set areaId to item 1 of argv
+	set projectIds to rest of argv
 	tell application "Things3"
 		set logbook to list id "TMLogbookListSource"
-		set loggedIds to {}
+		set doomed to {}
 		repeat with todo in to dos of logbook
-			if project of todo is not missing value then
-				if id of project of todo is (item 1 of argv) then set end of loggedIds to id of todo
-			end if
+			if my isTest(todo, areaId, projectIds) then set end of doomed to id of todo
 		end repeat
-		repeat with loggedId in loggedIds
-			delete (to do id loggedId of logbook)
+		repeat with todoId in doomed
+			try
+				delete (to do id todoId of logbook)
+			end try
 		end repeat
-		delete project id (item 1 of argv)
-		return count of (to dos of logbook whose name starts with "zz test")
+		set doomed to {}
+		repeat with todo in to dos of area id areaId
+			if class of todo is not project then set end of doomed to id of todo
+		end repeat
+		repeat with todoId in doomed
+			try
+				delete to do id todoId
+			end try
+		end repeat
+		repeat with projectId in projectIds
+			try
+				delete project id projectId
+			end try
+		end repeat
+		delete area id areaId
+		return (count of (to dos of logbook whose name starts with "zz test")) + (count of (to dos whose name starts with "zz test"))
 	end tell
 end run
+$is_test
 EOF
 )
 	if [ "$left" != "0" ]; then
-		echo "WARNING: $left to-dos named \"zz test...\" are still in the Logbook" >&2
+		echo "WARNING: $left to-dos named \"zz test...\" are still in Things3" >&2
 	fi
 }
 trap cleanup EXIT
+[ -n "$project" ] || exit 2
+
+# project_block prints a project's line in list-projects and its notes lines,
+# or nothing for an empty id, which would otherwise match every project's notes.
+project_block() {
+	[ -n "$1" ] || return 0
+	run list-projects | awk -v id="$1" -F'\t' '$1 == id { on = 1; print; next } on && /^\t/ { print; next } { on = 0 }'
+}
 
 # Create a to-do in the project, with notes, and read it back.
 notes=$(printf 'Line one "quoted"\nLine two')
@@ -117,7 +165,7 @@ projects=$(run list-projects)
 check "list-projects runs" 0 $?
 check "list-projects has the project and its notes" \
 	"$(printf '%s\t%s\t\n\tFolder: ~/zz-test\n\tSecond line' "$project" "$project_name")" \
-	"$(echo "$projects" | awk -v id="$project" -F'\t' '$1 == id { on = 1; print; next } on && /^\t/ { print; next } { on = 0 }')"
+	"$(project_block "$project")"
 
 # listed_line prints a to-do's line in a list: listed_line <list> <id>.
 listed_line() {
@@ -240,23 +288,51 @@ run delete-todo "$project"
 check "delete-todo refuses a project" 1 $?
 check "the refused project is not in the Trash" false "$(in_trash "$project")"
 
-# Nothing the cases made may be outside the test project.
-escaped=$(osascript - "$project" <<'EOF'
+# A project can be made in an area, and a to-do moved between projects and
+# areas.
+second_name="zz Things skill test 2"
+second=$(run add-project "$second_name" "Folder: ~/zz-test-2" area "$area")
+[ -n "$second" ] && test_projects="$test_projects $second"
+check "add-project makes the project in the area" \
+	"$(printf '%s\t%s\t%s\n\tFolder: ~/zz-test-2' "$second" "$second_name" "$area_name")" \
+	"$(project_block "$second")"
+
+todo=$(run add-todo "zz test in area" "" area "$area")
+check "add-todo puts a to-do in an area" "area: $area_name" "$(run show-todo "$todo" | grep '^area: ')"
+
+todo=$(run add-todo "zz test move" "" project "$project")
+run move-todo "$todo" project "$second"
+check "move-todo to a project" "project: $second_name" "$(run show-todo "$todo" | grep '^project: ')"
+run move-todo "$todo" area "$area"
+shown=$(run show-todo "$todo")
+check "move-todo to an area" "area: $area_name" "$(echo "$shown" | grep '^area: ')"
+check "move-todo to an area takes the to-do out of its project" "project: " "$(echo "$shown" | grep '^project: ')"
+run move-todo "$todo" project "$project"
+shown=$(run show-todo "$todo")
+check "move-todo from an area to a project" "project: $project_name" "$(echo "$shown" | grep '^project: ')"
+check "move-todo to a project takes the to-do out of its area" "area: " "$(echo "$shown" | grep '^area: ')"
+run move-todo "$todo" inbox
+check "move-todo rejects an unknown target" 1 $?
+run move-todo "$todo" project "$area"
+check "move-todo rejects an area's id as a project's" 1 $?
+check "a rejected move leaves the to-do where it was" "project: $project_name" "$(run show-todo "$todo" | grep '^project: ')"
+
+# Nothing the cases made may be outside the test area and projects.
+escaped=$(osascript - "$area" $test_projects <<EOF
 on run argv
+	set areaId to item 1 of argv
+	set projectIds to rest of argv
 	tell application "Things3"
 		set out to ""
 		repeat with todo in (to dos whose name starts with "zz test")
-			if project of todo is missing value then
-				set out to out & id of todo & " " & name of todo & linefeed
-			else if id of project of todo is not (item 1 of argv) then
-				set out to out & id of todo & " " & name of todo & linefeed
-			end if
+			if not my isTest(todo, areaId, projectIds) then set out to out & id of todo & " " & name of todo & linefeed
 		end repeat
 		return out
 	end tell
 end run
+$is_test
 EOF
 )
-check "nothing is left outside the test project" "" "$escaped"
+check "nothing is left outside the test area and projects" "" "$escaped"
 
 exit $failed
