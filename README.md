@@ -14,7 +14,7 @@ A [Claude Code](https://code.claude.com) plugin marketplace holding my writing, 
 | `grill-with-docs` | `/grill-with-docs:grill-with-docs` — a relentless interview to sharpen a plan or design, producing the specification, ADRs, glossary entries, and implementation notes as it goes. Bundles the `grilling` and `domain-modeling` skills it drives, and `to-issues` for breaking a specification into vertical-slice issues. Adapted from Matt Pocock's [mattpocock/skills](https://github.com/mattpocock/skills). |
 | `lean-prose` | `/lean-prose:write-lean-prose` — the house prose style: lean, plainly worded text for documentation, commit messages, pull/merge request descriptions, issue bodies, and comments. |
 | `markup-style` | `/markup-style:markup-style` — the house markup conventions: backtick code identifiers and repository/module/package names (including possessives), cross-document links, and lists. |
-| `project-planning` | `/project-planning:project-planning` — the house planning conventions: `next-steps.md` (what to work on by when), project briefs, and plans that state the current position with history left to git. `/project-planning:morning-review` brings `next-steps.md` up to today, and a session-start hook asks for it when the file was not reviewed today; the hook does nothing in a project without one. |
+| `project-planning` | `/project-planning:project-planning` — the house planning conventions: `backlog.md` (Claude's work, most important first), `history.md` (each session's decisions), the user's actions in their to-do app, a hub project that plans across projects, project briefs, and plans that state the current position. Your own instructions name the to-do app and its skill (such as `things3`) and the hub project. `/project-planning:join-hub` brings a project into the hub. A session-start hook asks for any uncommitted `backlog.md` change, such as items the hub added, to be committed first; it does nothing in a project without one. |
 | `stack-diff-doc` | `/stack-diff-doc:create-stack-diff-doc` — writes a planning doc (`issue-<slug>.md`) for one diff in a stacked-diff workflow: an issue title and body, a branch slug, and a git-spice-ready commit message. |
 | `things3` | `/things3:things3` — reads and changes Things3 through AppleScript: the Inbox, Today, Upcoming, Anytime, Someday and Logbook lists, areas, projects, to-dos, when dates, deadlines and tags. Needs macOS with Things3 installed; macOS asks once for permission for the terminal to control Things3. |
 | `work-item-briefs` | `/work-item-briefs:create-work-item-briefs` — writes the two higher-altitude descriptions of a whole piece of work: an epic brief (`epic-<slug>.md`, brief technical) and a business brief (`business-<slug>.md`, for a product tracker such as Jira). |
@@ -45,7 +45,7 @@ claude plugin install lean-prose@pxul-plugins
 
 Inside a Claude Code session, `/plugin install all@pxul-plugins` opens the plugin's details, where you choose a scope before it installs. `/plugin` → **Discover** lists every plugin in the marketplace to pick from.
 
-Skills are namespaced by their plugin (`/lean-prose:write-lean-prose`), and most also trigger automatically when a task matches their description. `grill-with-docs` and `to-issues` run only when invoked by name.
+Skills are namespaced by their plugin (`/lean-prose:write-lean-prose`), and most also trigger automatically when a task matches their description. `grill-with-docs`, `to-issues` and `join-hub` run only when invoked by name.
 
 ## Updating
 
