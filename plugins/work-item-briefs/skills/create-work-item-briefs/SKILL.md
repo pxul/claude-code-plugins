@@ -33,7 +33,7 @@ Synthesise from what is already available, in order of preference: the planning 
    - `epic-<slug>.md`
    - `business-<slug>.md`
 3. Confirm the slug and filenames with the developer before writing.
-4. Write both in [lean-prose](../../../lean-prose/skills/write-lean-prose/SKILL.md) style.
+4. Write both in the lean and plain prose style of the house rules (`house-rules`).
 5. After writing, summarise and list the manual next steps. Do not perform them.
 
 ## Templates

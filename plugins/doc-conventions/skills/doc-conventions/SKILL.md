@@ -5,7 +5,7 @@ description: House structural conventions for documentation — ADR title and st
 
 # Document conventions
 
-House conventions for the structure of documents. For prose leanness see `lean-prose`, for markup see `markup-style`, for spelling see `british-english`.
+House conventions for the structure of documents. Prose style, markup and spelling are in the house rules (`house-rules`).
 
 ## ADRs
 

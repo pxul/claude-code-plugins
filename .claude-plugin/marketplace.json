@@ -11,11 +11,6 @@
       "description": "Installs every plugin in this marketplace. Adds no skills of its own."
     },
     {
-      "name": "british-english",
-      "source": "./plugins/british-english",
-      "description": "House spelling convention: British English everywhere, including code identifiers."
-    },
-    {
       "name": "code-review",
       "source": "./plugins/code-review",
       "description": "House code review: findings written to a numbered review file in the project root, grouped by severity (Critical, Major, Minor, Nitpick), with a focus on correctness, safety, tests, types and dead code."
@@ -41,14 +36,9 @@
       "description": "A relentless interview to sharpen a plan or design, producing the specification, ADRs, glossary entries, and implementation notes as we go. Bundles the grilling and domain-modeling skills it drives, and to-issues for breaking a specification into end-to-end vertical-slice issues."
     },
     {
-      "name": "lean-prose",
-      "source": "./plugins/lean-prose",
-      "description": "House prose style: lean, plainly worded text for documentation, commit messages, pull/merge request descriptions, issue bodies, and comments."
-    },
-    {
-      "name": "markup-style",
-      "source": "./plugins/markup-style",
-      "description": "House markup conventions for prose: backtick code identifiers and repository/module/package names."
+      "name": "house-rules",
+      "source": "./plugins/house-rules",
+      "description": "House style rules loaded into every session by a hook: British English, lean and plain prose, markup conventions, and formatting (24-hour times, no em dashes, no hard-wrapping)."
     },
     {
       "name": "project-planning",
