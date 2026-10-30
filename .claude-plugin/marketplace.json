@@ -38,7 +38,7 @@
     {
       "name": "house-rules",
       "source": "./plugins/house-rules",
-      "description": "House style rules loaded into every session by a hook: British English, lean and plain prose, markup conventions, and formatting (24-hour times, no em dashes, no hard-wrapping)."
+      "description": "House style rules loaded into every session by a hook: British English, lean and plain prose, markup conventions, and formatting (24-hour times, no hard-wrapping)."
     },
     {
       "name": "project-planning",

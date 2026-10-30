@@ -94,5 +94,4 @@ An inline enumeration of four or more items, or of structurally parallel items, 
 ## Formatting
 
 - Times use the 24-hour clock: 09:30, 20:00.
-- No em dashes. Use a colon, a comma, brackets or a new sentence instead. An en dash in a range (2024–2026) is fine.
 - Markdown is not hard-wrapped: one line per paragraph, so a diff shows only what changed.
