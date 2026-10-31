@@ -15,6 +15,8 @@ Lives at the project root and lists Claude's work, most important first. Each it
 
 Take an item off when it is done or dropped, and say which in `history.md`.
 
+Claude's recurring work goes in a **Recurring** section at the end of the file, below the one-off items, since it does not belong in the user's to-do app. Each recurring item is headed by its title like any other, and says how often it recurs and when it is next due ("Monthly, on the first working day. Next due: 1 December."). When one is done, move its next due date on and say in `history.md` that it was done; the item itself stays.
+
 ## history.md
 
 Lives at the project root and records each session's decisions, since the to-do app keeps no history of edits. Entries are short and dated, newest first, one per session or decision: what changed and why (an item done, dropped, added or re-dated), leaving out what git already shows. Only the project's own sessions write it.
@@ -29,7 +31,7 @@ Lives at the project root and records each session's decisions, since the to-do 
 
 ## The hub project
 
-The hub project holds the user's loops that belong to no project and plans their week from every project, the to-do app and the calendar. It passes work to a project by adding an item to that project's `backlog.md`, without committing. At session start a hook asks for any uncommitted `backlog.md` change to be committed: commit `backlog.md` on its own, with a `history.md` entry noting which items came from the hub project.
+The hub project holds the user's loops that belong to no project and plans their week from every project (including the next due dates in each backlog's Recurring section), the to-do app and the calendar. It passes work to a project by adding an item to that project's `backlog.md`, without committing. At session start a hook asks for any uncommitted `backlog.md` change to be committed: commit `backlog.md` on its own, with a `history.md` entry noting which items came from the hub project.
 
 `/project-planning:join-hub` brings a project into the hub.
 
@@ -53,4 +55,4 @@ Planning files are not hard-wrapped: one line per paragraph, so a diff shows onl
 
 ## Nothing in the background
 
-Recurring work is a repeating to-do in the to-do app or part of the hub project's reviews, and is done in a session. Do not set up cron jobs, scheduled agents, cloud routines or self-pacing loops for it. A session-start hook is acceptable, since it runs only when the user opens a session.
+Recurring work is done in a session: Claude's is an item in the Recurring section of `backlog.md`, and the user's is a repeating to-do in the to-do app or part of the hub project's reviews. Do not set up cron jobs, scheduled agents, cloud routines or self-pacing loops for it. A session-start hook is acceptable, since it runs only when the user opens a session.
