@@ -24,7 +24,8 @@ Lives at the project root and records each session's decisions, since the to-do 
 ## The to-do app
 
 - The project has a project in the to-do app for the user's actions in it, whose notes start with a line naming the folder: `Folder: ~/path/to/project`. The hub project finds projects through this line.
-- Before a session ends, add each action it leaves for the user to the to-do app's inbox, without asking, and say so: an action mentioned only in the session gets lost.
+- Before a session ends, add each action it leaves for the user to the to-do app's inbox, without asking, and say so: an action mentioned only in the session gets lost. Its notes name the project it came from, so the hub project can file it without asking.
+- An action that cannot wait is set to Today, or the app's equivalent, as it is added, and the session says so, since a to-do app may have no priority to mark it urgent.
 - A date goes in as a deadline on a to-do. Only the hub project writes to calendars.
 - Add or change items without asking only when the user has just asked for that change. Propose anything else (sorting the inbox, moving, dating, completing, cancelling or deleting items) and do it once the user agrees.
 - Cancel a loop that is closed but not done, rather than deleting it, so the app keeps a record of it. Deleting is for mistakes such as duplicates.
@@ -34,6 +35,18 @@ Lives at the project root and records each session's decisions, since the to-do 
 The hub project holds the user's loops that belong to no project and plans their week from every project (including the next due dates in each backlog's Recurring section), the to-do app and the calendar. It passes work to a project by adding an item to that project's `backlog.md`, without committing. At session start a hook asks for any uncommitted `backlog.md` change to be committed: commit `backlog.md` on its own, with a `history.md` entry noting which items came from the hub project.
 
 `/project-planning:join-hub` brings a project into the hub.
+
+## Other projects
+
+Work a session finds for another project, the hub project included, goes in that project's `backlog.md` and names the project it came from, unless the user asks for it to be done now.
+
+## Where projects live
+
+The user's instructions may name a folder where projects live. Taking over a project means moving its folder there; a code repository with a remote stays where it is.
+
+## Commits
+
+A project's repository is Claude's to commit: commit after each agreed change, with the trailer the user's instructions give, unless the project's instructions say otherwise.
 
 ## Public repositories
 
