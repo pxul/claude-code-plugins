@@ -26,7 +26,7 @@ Lives at the project root and records each session's decisions, since the to-do 
 - The project has a project in the to-do app for the user's actions in it, whose notes start with a line naming the folder: `Folder: ~/path/to/project`. The hub project finds projects through this line.
 - Before a session ends, add each action it leaves for the user to the to-do app's inbox, without asking, and say so: an action mentioned only in the session gets lost. Its notes name the project it came from, so the hub project can file it without asking.
 - An action that cannot wait is set to Today, or the app's equivalent, as it is added, and the session says so, since a to-do app may have no priority to mark it urgent.
-- A date goes in as a deadline on a to-do. Only the hub project writes to calendars.
+- A date goes in as a deadline on a to-do. Only the hub project writes to calendars: another project passes calendar work as an item in the hub project's `backlog.md` and never offers to write a calendar itself. If the work cannot wait, the session tells the user to open a hub session.
 - Add or change items without asking only when the user has just asked for that change. Propose anything else (sorting the inbox, moving, dating, completing, cancelling or deleting items) and do it once the user agrees.
 - Cancel a loop that is closed but not done, rather than deleting it, so the app keeps a record of it. Deleting is for mistakes such as duplicates.
 
