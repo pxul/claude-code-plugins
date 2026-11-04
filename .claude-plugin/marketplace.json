@@ -59,6 +59,11 @@
       "name": "work-item-briefs",
       "source": "./plugins/work-item-briefs",
       "description": "Write the two higher-altitude descriptions of a whole piece of work — an epic brief (brief technical) and a business brief (business level) — as markdown files, above the per-diff stack-diff docs."
+    },
+    {
+      "name": "work-rules",
+      "source": "./plugins/work-rules",
+      "description": "Working rules loaded into every session by a hook: stay in the working directory, ask questions one at a time in prose, keep emails as .md records, check changes with the project's own commands, and which commits carry a co-author trailer."
     }
   ]
 }
