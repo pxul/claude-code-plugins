@@ -16,6 +16,7 @@ A [Claude Code](https://code.claude.com) plugin marketplace holding my writing, 
 | `stack-diff-doc` | `/stack-diff-doc:create-stack-diff-doc` — writes a planning doc (`issue-<slug>.md`) for one diff in a stacked-diff workflow: an issue title and body, a branch slug, and a git-spice-ready commit message. |
 | `things3` | `/things3:things3` — reads and changes Things3 through AppleScript: the Inbox, Today, Upcoming, Anytime, Someday and Logbook lists, areas, projects, to-dos, when dates, deadlines and tags. Needs macOS with Things3 installed; macOS asks once for permission for the terminal to control Things3. |
 | `work-item-briefs` | `/work-item-briefs:create-work-item-briefs` — writes the two higher-altitude descriptions of a whole piece of work: an epic brief (`epic-<slug>.md`, brief technical) and a business brief (`business-<slug>.md`, for a product tracker such as Jira). |
+| `work-rules` | Working rules added to every session by a hook rather than a skill, since they must always apply: stay in the working directory unless the user asks, ask questions one at a time in prose, keep emails as `.md` records, check a change with the project's own commands, and add a co-author trailer to commits Claude makes but not to the user's or to pull request descriptions. |
 
 The skills refer to each other (`stack-diff-doc` writes in the `house-rules` prose style, for example), so they work best installed together. The `all` plugin installs the whole set in one go.
 
