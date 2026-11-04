@@ -19,14 +19,14 @@ Claude's recurring work goes in a **Recurring** section at the end of the file, 
 
 ## history.md
 
-Lives at the project root and records each session's decisions, since the to-do app keeps no history of edits. Entries are short and dated, newest first, one per session or decision: what changed and why (an item done, dropped, added or re-dated), leaving out what git already shows. Only the project's own sessions write it.
+Lives at the project root and records each session's decisions, since the to-do app keeps no history of edits. Entries are short and dated, newest first, one per session or decision: what changed and why (an item done, dropped, added or re-dated), leaving out what git already shows. Only the project's own sessions write it, except for the entry another project's session adds when it does work there that the user asked for now (see Other projects).
 
 ## The to-do app
 
 - The project has a project in the to-do app for the user's actions in it, whose notes start with a line naming the folder: `Folder: ~/path/to/project`. The hub project finds projects through this line.
 - Before a session ends, add each action it leaves for the user to the to-do app's inbox, without asking, and say so: an action mentioned only in the session gets lost. Its notes name the project it came from, so the hub project can file it without asking.
 - An action that cannot wait is set to Today, or the app's equivalent, as it is added, and the session says so, since a to-do app may have no priority to mark it urgent.
-- A date goes in as a deadline on a to-do. Only the hub project writes to calendars: another project passes calendar work as an item in the hub project's `backlog.md` and never offers to write a calendar itself. If the work cannot wait, the session tells the user to open a hub session.
+- A date goes in as a deadline on a to-do. The hub project owns its own calendar and writes to it freely. Any project, the hub included, may write to the user's personal calendar, which their instructions name, when the user asks or when it proposes an event and the user agrees. Other calendars are written only as the user's instructions allow. Other calendar work goes to the hub project as an item in its `backlog.md`; if it cannot wait, the session tells the user to open a hub session.
 - Add or change items without asking only when the user has just asked for that change. Propose anything else (sorting the inbox, moving, dating, completing, cancelling or deleting items) and do it once the user agrees.
 - Cancel a loop that is closed but not done, rather than deleting it, so the app keeps a record of it. Deleting is for mistakes such as duplicates.
 
@@ -38,7 +38,15 @@ The hub project holds the user's loops that belong to no project and plans their
 
 ## Other projects
 
-Work a session finds for another project, the hub project included, goes in that project's `backlog.md` and names the project it came from, unless the user asks for it to be done now.
+Work a session finds for another project, the hub project included, goes in that project's `backlog.md` and names the project it came from, unless the user asks for it to be done now. When they do, read that repository's `AGENTS.md` or `CLAUDE.md` before changing anything and follow it, since it is not loaded into the session, and add no backlog item for the work. Add an entry to that project's `history.md` saying what changed and which project's session made the change.
+
+## Rules for every project
+
+A rule or preference meant for every project, wherever it comes up, is an item in the `backlog.md` of the project holding the user's global configuration, which their instructions name. Word it with the user in that session. Do not pass it through the hub project, and do not keep it in the project's own files or memory.
+
+## No memories
+
+Do not save memories. A fact about a project goes in that project's files, and a preference for every project goes to the global configuration project, as Rules for every project says. A project that still holds memories sorts them at its next session, with the user's agreement: facts move into its files, preferences go to the global configuration project as proposals, and anything recorded elsewhere or out of date is deleted.
 
 ## Where projects live
 
