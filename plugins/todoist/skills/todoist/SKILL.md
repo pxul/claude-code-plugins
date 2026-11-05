@@ -19,7 +19,7 @@ If the connector's tools are missing, the connector is not connected: say so and
 
 - **Today** is a task due today. An action that cannot wait gets today's date as it is added.
 - **Someday** is the `someday` label: a task to come back to, not one to do now. An undated task without the label can be done any time, which is not the same thing.
-- **A block** of time is a task with a due time and a duration. Set both with `reschedule-tasks`, which also moves a task to another date or time without replacing a repeating task's pattern.
+- **A block** of time is a task with a due time and a duration. A task with no date yet gets its first date or time, and its duration, from `update-tasks` with a `dueString` and a `duration`, since `reschedule-tasks` refuses a task with no due date. `reschedule-tasks` moves a task that already has a date to another date or time, and sets its duration, without replacing a repeating task's pattern.
 
 ## Finishing a task
 
