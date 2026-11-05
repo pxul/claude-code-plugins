@@ -51,9 +51,9 @@
       "description": "Create stack-diff planning docs (issue-<slug>.md) for a stacked-diff workflow: issue title/body, branch slug, and a git-spice-ready commit message."
     },
     {
-      "name": "things3",
-      "source": "./plugins/things3",
-      "description": "Read and change Things3 through AppleScript: the Inbox, Today, Upcoming, Anytime, Someday and Logbook lists, areas, projects, to-dos, when dates, deadlines and tags."
+      "name": "todoist",
+      "source": "./plugins/todoist",
+      "description": "How the house planning conventions map onto Todoist through its connector: areas, Someday, cancelling, completions, time blocks and Folder lines."
     },
     {
       "name": "work-item-briefs",

@@ -1,0 +1,8 @@
+{
+  "name": "todoist",
+  "description": "How the house planning conventions map onto Todoist through its connector: areas, Someday, cancelling, completions, time blocks and Folder lines.",
+  "author": {
+    "name": "Paul Jefferson",
+    "email": "31599723+pxul@users.noreply.github.com"
+  }
+}
