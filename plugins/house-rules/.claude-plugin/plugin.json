@@ -1,6 +1,6 @@
 {
   "name": "house-rules",
-  "description": "House style rules loaded into every session by a hook: British English, lean and plain prose, markup conventions, and formatting (24-hour times, no em dashes, no semicolons in what is sent in the user's name, no hard-wrapping).",
+  "description": "House style rules loaded into every session by a hook: British English, lean and plain prose, markup conventions, and formatting (24-hour times, no em dashes, no semicolons in what is sent in the user's name, no hard-wrapped Markdown, commit messages wrapped at 72 columns).",
   "author": {
     "name": "Paul Jefferson",
     "email": "31599723+pxul@users.noreply.github.com"
