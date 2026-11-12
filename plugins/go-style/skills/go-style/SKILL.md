@@ -44,7 +44,7 @@ type Command struct {
 
 10. **Declare interfaces where they are consumed:** An interface belongs in the package that calls it, named and sized for what that consumer needs; the implementing package exports concrete types (`func NewCrypto() *Crypto`), never an interface for itself. Do not declare an interface next to its implementation for mocking or "future flexibility" — an interface earns its place when a consumer must accept more than one implementation. A shared library may declare one interface on behalf of its many consumers, but the implementor never owns it. Keep interfaces small: only the methods the consumer actually calls.
 
-11. **Test the public interface:** Write tests against the package's public API, not internal or backend implementation details.
+11. **Test the public interface:** Write tests against the package's public API, not internal or backend implementation details. Never export a function, type or field only so a test can reach it: test it through the exported behaviour that uses it. Exposing an unexported name to the package's tests through an `export_test.go` file is the same fault, so use one only when no exported behaviour reaches what needs testing.
 
 12. **Log with `slog`:** Use the standard library's `log/slog` for structured logging where it helps observability (important decisions, errors, state changes). Do not log trivial paths.
 
