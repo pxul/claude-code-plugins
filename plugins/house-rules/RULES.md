@@ -59,6 +59,8 @@ Never use these, in fresh text or when editing. Rephrase around them by naming t
 | the honest X | name X directly: "the boundary", "the interface" |
 | shape of the X | describe the actual structure, e.g. "the design", "the layout" |
 | test shape, the shape the X reaches | say what the setup does and why, e.g. "the link is wrapped in a `<span>`, because a bare `<a>` among prose is exempt" |
+| X is the kind of Y I want to Z ("this is the kind of system I want to build") | say directly what draws you to X, e.g. "I would like to help build the platform, which support teams use to answer customers from one inbox" |
+| vague stakes ("when a wrong answer is costly", "high-consequence domains") | name the stakes: what goes wrong and for whom, e.g. "where a missed fault grounds an aircraft" |
 
 ### Editing someone else's text
 
