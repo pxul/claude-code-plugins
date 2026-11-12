@@ -1,6 +1,6 @@
 ---
 name: go-style
-description: House Go style rules. Apply when writing or editing Go code — covers interface placement (declare where consumed), error handling (sentinels and wrapping), doc comments, struct field comments, testing conventions (public interface, testify, testdata fixtures), logging with slog, acronyms in names, benchmarking, and line splitting. Use on any Go authoring or review task.
+description: House Go style rules. Apply when writing or editing Go code — covers interface placement (declare where consumed), error handling (sentinels and wrapping), doc comments, struct field comments, testing conventions (public interface, testify, testdata fixtures), logging with slog, naming and acronyms in names, benchmarking, and line splitting. Use on any Go authoring or review task.
 ---
 
 # Go style
@@ -49,3 +49,12 @@ type Command struct {
 12. **Log with `slog`:** Use the standard library's `log/slog` for structured logging where it helps observability (important decisions, errors, state changes). Do not log trivial paths.
 
 13. **Capitalise acronyms and initialisms in names:** Keep them in full caps in variable, type and field names: `UserID` not `UserId`, `yAPD` not `yApd`.
+
+14. **Name things well:** Follow Go's naming conventions, from Effective Go and the Go Code Review Comments:
+    - The wider a name's scope, the more it says: `i` for a short loop and `r` for a receiver, but a descriptive name for a field or a package-level value.
+    - Leave the type out of a name (`ports`, not `portMap` or `portList`) unless it tells the reader something they need.
+    - Don't repeat the package name: `config.Loader`, not `config.ConfigLoader`.
+    - Getters have no `Get`: `Owner()`, not `GetOwner()`.
+    - Name what a value means, not how it is stored: `expiresAt`, not `unixTime`.
+
+    In review, point out poor names, not only breaks of these rules.
