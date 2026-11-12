@@ -28,7 +28,7 @@
     {
       "name": "go-style",
       "source": "./plugins/go-style",
-      "description": "House Go style rules: interface placement, error handling, doc comments, struct field comments, testing conventions, and more."
+      "description": "House Go style rules: interface placement, error handling, doc comments, struct field comments, testing conventions, naming, and more."
     },
     {
       "name": "grill-with-docs",
