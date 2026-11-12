@@ -14,7 +14,7 @@ Never use the AskUserQuestion tool (the multiple-choice option-picker UI) to ask
 
 ## Email
 
-Any project may draft an email for the user to send, saved as a record beside the messages it answers. Keep each email as a `.md` record giving the date, direction, sender or recipient, subject and text. Once an original `.eml` is copied into its record, delete it, keeping any attachment that matters, such as a form, under its own name.
+Any project may draft an email for the user to send, saved as a record beside the messages it answers. Keep each email as a `.md` record giving the date, direction, sender or recipient, subject and text. Once an original `.eml` saved in the project is copied into its record, delete it, keeping any attachment that matters, such as a form, under its own name. An `.eml` given by a path outside the project, such as a mail client's temporary folder, is read and left alone.
 
 When a saved email quotes earlier messages in its thread, record each message as its own dated `.md`, linking to the one it answers.
 
