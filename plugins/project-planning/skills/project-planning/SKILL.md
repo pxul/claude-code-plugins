@@ -29,6 +29,7 @@ Lives at the project root and records each session's decisions, since the todo a
 - A date goes in as a deadline on a todo. The hub project owns its own calendar and writes to it freely. Any project, the hub included, may write to the user's personal calendar, which their instructions name, when the user asks or when it proposes an event and the user agrees. Other calendars are written only as the user's instructions allow. Other calendar work goes to the hub project as an item in its `backlog.md`; if it cannot wait, the session tells the user to open a hub session.
 - Add or change items without asking only when the user has just asked for that change. Propose anything else (sorting the inbox, moving, dating, completing, cancelling or deleting items) and do it once the user agrees.
 - Cancel a loop that is closed but not done, rather than deleting it, so the app keeps a record of it. Deleting is for mistakes such as duplicates.
+- When a session's work on a todo stops part done, it offers to add a comment on it saying what was done and what is left, and adds it once the user agrees, leaving the description as it is.
 
 ## The hub project
 
