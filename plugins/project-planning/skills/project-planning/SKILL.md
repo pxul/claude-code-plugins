@@ -1,6 +1,6 @@
 ---
 name: project-planning
-description: House conventions for planning a project: backlog.md (Claude's work, most important first), history.md (each session's decisions), the user's actions in their todo app, the hub project that plans across projects, project briefs, and plans that state the current position. Use when creating or updating backlog.md or history.md, leaving an action for the user, writing a brief or a plan, or when asked what to work on next.
+description: House conventions for planning a project: backlog.md (Claude's work, most important first), history.md (each session's decisions), the user's actions in their todo app, the hub project that plans across projects, sub-projects, project briefs, and plans that state the current position. Use when creating or updating backlog.md or history.md, leaving an action for the user, starting or moving a sub-project, writing a brief or a plan, or when asked what to work on next.
 ---
 
 # Project planning
@@ -61,9 +61,20 @@ A project's repository is Claude's to commit: commit after each agreed change, w
 
 A public repository keeps no `backlog.md` or `history.md`, since they name the user's projects and directories. Its planning lives in the private project that owns it, and its work is done from a session there with the public repository as a second working directory.
 
+## Sub-projects
+
+A sub-project is a piece of a project's work with a brief of its own, planned by the project that holds it:
+
+- It lives in a folder of its own in the parent's `projects/` folder. The folder holds its `brief.md`, an `AGENTS.md` where it needs guidance of its own, and its repository in `repo/` once it has code.
+- A brief that carries its own plan keeps it there as a checklist with estimated hours and no schedule, which the hub project books. Ticks record progress, with the actual time beside each, and decisions about the plan go in the parent's `history.md`. A sub-project has no `backlog.md`, `history.md` or project in the todo app of its own.
+- What it learns that would still be worth finding once it is done, such as notes from study, goes to the user's knowledgebase, where their instructions name one. Its plan and records, such as a practice log, stay in its folder, and its decisions in the parent's `history.md`.
+- One that outgrows its parent, such as one that other projects come to depend on, moves out into a project of its own, which may hold sub-projects in turn. Its entries in the parent's `history.md` are copied into the new project's `history.md`, since the parent may later be renamed or removed, and the parent's `history.md` records that it moved out and where to. Links to it are updated.
+- `repo/` is ignored by the parent's git and stays there once it has a remote. Everything in it must be fit to publish, so the brief and anything else private stay outside it. Check each file before its first commit there, since removing it later means rewriting the repository's history. Who commits in `repo/`, and what Claude writes there, is for the parent's or the sub-project's instructions to say. Without them, it is Claude's to commit.
+- One that is dropped rather than finished is deleted, since git history keeps its brief.
+
 ## Project briefs
 
-A project undertaken for a reason outside itself has a brief recording why it exists, what it supports, the domain model, the invariants to test, and the design decisions to make deliberately. Read the brief before working on the project. When a project moves into its own repository, its brief moves with it (`docs/brief.md`) and the old location keeps a pointer to it.
+A project undertaken for a reason outside itself has a brief recording why it exists, what it supports, the domain model, the invariants to test, and the design decisions to make deliberately. Read the brief before working on the project. A sub-project's brief stays in its folder, beside `repo/`. When a project moves into a repository of its own, its brief moves with it (`docs/brief.md`) and the old location keeps a pointer to it, unless the repository is public or may become public: then the brief stays in the private project that owns it, as its planning does.
 
 ## Plans carry no history
 
