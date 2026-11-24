@@ -27,7 +27,7 @@ Records each session's decisions, since the todo app keeps no history of edits. 
 
 ## The todo app
 
-- The project has a project in the todo app for the user's actions in it, whose notes start with a line naming the folder: `Folder: ~/path/to/project`. The hub project finds projects through this line.
+- The project has a project in the todo app for the user's actions in it, which its `AGENTS.md` names.
 - Before a session ends, add each action it leaves for the user to the todo app's inbox, without asking, and say so: an action mentioned only in the session gets lost. Its notes name the project it came from, so the hub project can file it without asking.
 - An action that cannot wait is set to Today, or the app's equivalent, as it is added, and the session says so, since a todo app may have no priority to mark it urgent.
 - A date goes in as a deadline on a todo. The todo app holds the plan, and the hub project's Done calendar, unless the user's instructions give it another name, holds what the user actually did, which only the hub project writes: at each review it adds an event for each piece of work, at the time it was done. Any project, the hub included, may write to the user's personal calendar, which their instructions name, when the user asks or when it proposes an event and the user agrees. Other calendars are written only as the user's instructions allow. Other calendar work goes to the hub project as an item in its `backlog.md`; if it cannot wait, the session tells the user to open a hub session.
@@ -38,6 +38,10 @@ Records each session's decisions, since the todo app keeps no history of edits. 
 ## The hub project
 
 The hub project holds the user's loops that belong to no project and plans their week from every project (including the next due dates in each backlog's Recurring section), the todo app and the calendar. It passes work to a project by adding an item to that project's `backlog.md`, without committing. At session start a hook asks for any uncommitted `backlog.md` change to be committed: commit `backlog.md` on its own, with a `history.md` entry noting which items came from the hub project.
+
+The hub project lists every project it covers in `projects.md` in its root, a table of each project's name, folder and todo project. A project with no folder, or none in the todo app, says so. Only the hub's sessions change it: a project that joins or is renamed, moved or retired passes the change to the hub's `backlog.md`.
+
+At each weekly review, the hub compares the list with the folder where projects live, the todo app's projects and the additional directories in its settings, and reports any difference rather than correcting it.
 
 `/project-planning:join-hub` brings a project into the hub.
 
