@@ -1,6 +1,6 @@
 ---
 name: todoist
-description: How the house planning conventions map onto Todoist through the Todoist connector: areas, Someday, cancelling, reading completions, time blocks and a project's Folder line. Use whenever a task reads from or writes to Todoist.
+description: How the house planning conventions map onto Todoist through the Todoist connector: areas, Someday, cancelling, reading completions, time blocks and finding a project. Use whenever a task reads from or writes to Todoist.
 ---
 
 # Todoist
@@ -12,7 +12,7 @@ If the connector's tools are missing, the connector is not connected: say so and
 ## Projects and areas
 
 - **An area** is a parent project. Its child projects are the area's projects, and tasks directly in the parent are the area's own loose tasks.
-- **A project's Folder line:** the description of a project that belongs to a folder on disk starts with its `Folder: ~/path/to/project` line. Find a project from its folder by reading project descriptions, not by its name.
+- **A project** is found by the name its `AGENTS.md` gives for it in the todo app.
 - **The inbox** is Todoist's Inbox project.
 
 ## Dates and lists
