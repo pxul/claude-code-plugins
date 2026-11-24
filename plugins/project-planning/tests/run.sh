@@ -60,4 +60,7 @@ mkdir "$dir"
 printf '# Backlog\n' >"$dir/backlog.md"
 check "not a git repository, on either output" "" "$(hook "$dir" 2>&1)"
 
+matcher=$(sed -n 's/.*"matcher": "\(.*\)".*/\1/p' "$here/../hooks/hooks.json")
+check "runs at startup and after /clear" "startup|clear" "$matcher"
+
 exit $failed
