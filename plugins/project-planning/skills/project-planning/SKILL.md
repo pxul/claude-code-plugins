@@ -1,6 +1,6 @@
 ---
 name: project-planning
-description: House conventions for planning a project: backlog.md (Claude's work, most important first), history.md (each session's decisions), the user's actions in their todo app, the hub project that plans across projects, sub-projects, project briefs, and plans that state the current position. Use when creating or updating backlog.md or history.md, leaving an action for the user, starting or moving a sub-project, writing a brief or a plan, or when asked what to work on next.
+description: House conventions for planning a project: meta/backlog.md (Claude's work, most important first), meta/history.md (each session's decisions), the user's actions in their todo app, the hub project that plans across projects, sub-projects, project briefs, and plans that state the current position. Use when creating or updating backlog.md or history.md, leaving an action for the user, starting or moving a sub-project, writing a brief or a plan, or when asked what to work on next.
 ---
 
 # Project planning
@@ -9,9 +9,15 @@ How a project records what to do and what was decided. Work is split by who can 
 
 The user's own instructions name the todo app, the skill that drives it, and the hub project. If they name none, ask before writing anything outside the project.
 
+## The `meta/` folder
+
+`backlog.md` and `history.md` are Claude's files, so they live in the project's `meta/` folder, which leaves the top level to the user's own files and the project's instructions. Wherever this skill names them, it means the ones in `meta/`.
+
+A project that still has them in its root keeps using them there until its own session moves them: read and write `meta/backlog.md` where it exists, and otherwise the one in the root, so a project never has two. To move them, use `git mv`, then fix the links the move breaks: relative links inside the two files, links to them from other files, and the project's instructions. Record the move in `history.md`.
+
 ## backlog.md
 
-Lives at the project root and lists Claude's work, most important first. Each item is a section headed by a short, specific title, not a number: the title is how the item is referred to, so reordering never breaks a reference. Give an item a date only where one really applies. Where the detail is in another file, point at it rather than repeating it.
+Lists Claude's work, most important first. Each item is a section headed by a short, specific title, not a number: the title is how the item is referred to, so reordering never breaks a reference. Give an item a date only where one really applies. Where the detail is in another file, point at it rather than repeating it.
 
 Take an item off when it is done or dropped, and say which in `history.md`.
 
@@ -19,7 +25,7 @@ Claude's recurring work goes in a **Recurring** section at the end of the file, 
 
 ## history.md
 
-Lives at the project root and records each session's decisions, since the todo app keeps no history of edits. Entries are short and dated, newest first, one per session or decision: what changed and why (an item done, dropped, added or re-dated), leaving out what git already shows. Only the project's own sessions write it, except for the entry another project's session adds when it does work there that the user asked for now (see Other projects).
+Records each session's decisions, since the todo app keeps no history of edits. Entries are short and dated, newest first, one per session or decision: what changed and why (an item done, dropped, added or re-dated), leaving out what git already shows. Only the project's own sessions write it, except for the entry another project's session adds when it does work there that the user asked for now (see Other projects).
 
 ## The todo app
 
