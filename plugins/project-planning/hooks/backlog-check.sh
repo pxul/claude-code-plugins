@@ -1,9 +1,12 @@
 #!/bin/sh
 # Asks for any uncommitted change to the project's backlog.md, such as items the
-# hub project added, to be committed before other work.
+# hub project added, to be committed before other work. The planning files are in
+# meta/, or in the project root where the project has not moved them.
 
 dir="${CLAUDE_PROJECT_DIR:-.}"
 
-[ -n "$(git -C "$dir" status --porcelain -- backlog.md 2>/dev/null)" ] || exit 0
+for folder in meta/ ""; do
+	[ -n "$(git -C "$dir" status --porcelain -- "${folder}backlog.md" 2>/dev/null)" ] || continue
 
-echo "backlog.md has uncommitted changes, probably items added by the hub project. Before anything else, commit backlog.md on its own, with a history.md entry noting which items came from the hub project."
+	echo "${folder}backlog.md has uncommitted changes, probably items added by the hub project. Before anything else, commit ${folder}backlog.md on its own, with a ${folder}history.md entry noting which items came from the hub project."
+done
