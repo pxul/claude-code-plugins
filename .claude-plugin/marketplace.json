@@ -53,7 +53,7 @@
     {
       "name": "todoist",
       "source": "./plugins/todoist",
-      "description": "How the house planning conventions map onto Todoist through its connector: areas, Someday, cancelling, completions, time blocks and Folder lines."
+      "description": "How the house planning conventions map onto Todoist through its connector: areas, Someday, cancelling, completions and time blocks."
     },
     {
       "name": "work-item-briefs",
