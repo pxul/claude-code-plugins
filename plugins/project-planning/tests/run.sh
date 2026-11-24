@@ -41,14 +41,14 @@ hook() {
 
 dir=$(repo changed backlog.md)
 printf '\n## New item\n' >>"$dir/backlog.md"
-check "uncommitted backlog.md change" "backlog.md has uncommitted changes, probably items added by the hub project. Before anything else, commit backlog.md on its own, with a history.md entry noting which items came from the hub project." "$(hook "$dir")"
+check "uncommitted change to a backlog.md outside meta/" "" "$(hook "$dir")"
 
 dir=$(repo meta-changed meta/backlog.md)
 printf '\n## New item\n' >>"$dir/meta/backlog.md"
 check "uncommitted meta/backlog.md change" "meta/backlog.md has uncommitted changes, probably items added by the hub project. Before anything else, commit meta/backlog.md on its own, with a meta/history.md entry noting which items came from the hub project." "$(hook "$dir")"
 
-dir=$(repo unchanged backlog.md)
-check "unchanged backlog.md" "" "$(hook "$dir")"
+dir=$(repo unchanged meta/backlog.md)
+check "unchanged meta/backlog.md" "" "$(hook "$dir")"
 
 dir="$root/no-backlog"
 mkdir "$dir"
@@ -56,8 +56,8 @@ git -C "$dir" init -q
 check "no backlog.md" "" "$(hook "$dir")"
 
 dir="$root/not-a-repo"
-mkdir "$dir"
-printf '# Backlog\n' >"$dir/backlog.md"
+mkdir -p "$dir/meta"
+printf '# Backlog\n' >"$dir/meta/backlog.md"
 check "not a git repository, on either output" "" "$(hook "$dir" 2>&1)"
 
 matcher=$(sed -n 's/.*"matcher": "\(.*\)".*/\1/p' "$here/../hooks/hooks.json")
