@@ -13,8 +13,6 @@ The user's own instructions name the todo app, the skill that drives it, and the
 
 `backlog.md` and `history.md` are Claude's files, so they live in the project's `meta/` folder, which leaves the top level to the user's own files and the project's instructions. Wherever this skill names them, it means the ones in `meta/`.
 
-A project that still has them in its root keeps using them there until its own session moves them: read and write `meta/backlog.md` where it exists, and otherwise the one in the root, so a project never has two. To move them, use `git mv`, then fix the links the move breaks: relative links inside the two files, links to them from other files, and the project's instructions. Record the move in `history.md`.
-
 ## backlog.md
 
 Lists Claude's work, most important first. Each item is a section headed by a short, specific title, not a number: the title is how the item is referred to, so reordering never breaks a reference. Give an item a date only where one really applies. Where the detail is in another file, point at it rather than repeating it.
