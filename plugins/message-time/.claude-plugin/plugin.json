@@ -1,0 +1,8 @@
+{
+  "name": "message-time",
+  "description": "Adds the local time, day and date to every prompt, so a session can tell when each message arrived.",
+  "author": {
+    "name": "Paul Jefferson",
+    "email": "31599723+pxul@users.noreply.github.com"
+  }
+}

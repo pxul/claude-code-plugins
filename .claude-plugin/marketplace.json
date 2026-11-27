@@ -41,6 +41,11 @@
       "description": "House style rules loaded into every session by a hook: British English, lean and plain prose, markup conventions, and formatting (24-hour times, no em dashes, no semicolons in what is sent in the user's name, no hard-wrapped Markdown, commit messages wrapped at 72 columns)."
     },
     {
+      "name": "message-time",
+      "source": "./plugins/message-time",
+      "description": "Adds the local time, day and date to every prompt, so a session can tell when each message arrived."
+    },
+    {
       "name": "project-planning",
       "source": "./plugins/project-planning",
       "description": "Planning conventions for a project: meta/backlog.md for Claude's work, meta/history.md for each session's decisions, the user's actions in their todo app, and a hub project that plans across projects. A session-start hook asks for backlog.md changes left by the hub to be committed, and join-hub brings a project into the hub."
